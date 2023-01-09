@@ -37,17 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -67,34 +82,37 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "wmdO");
+/******/ 	return __webpack_require__(__webpack_require__.s = "c833");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "FsIF":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "c833":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "TheMask", function() { return /* reexport */ src_component; });
+__webpack_require__.d(__webpack_exports__, "mask", function() { return /* reexport */ directive; });
+__webpack_require__.d(__webpack_exports__, "tokens", function() { return /* reexport */ src_tokens; });
+
+// CONCATENATED MODULE: ../.nvm/versions/node/v12.22.12/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
 
 if (typeof window !== 'undefined') {
-  let i
-  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js$/))) {
+  if (false) {}
+
+  var i
+  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js(\?.*)?$/))) {
     __webpack_require__.p = i[1] // eslint-disable-line
   }
 }
 
-
-/***/ }),
-
-/***/ "wmdO":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: /home/neves/.config/yarn/global/node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
-var setPublicPath = __webpack_require__("FsIF");
+// Indicate to webpack that this file can be concatenated
+/* harmony default export */ var setPublicPath = (null);
 
 // CONCATENATED MODULE: ./src/tokens.js
 /* harmony default export */ var src_tokens = ({
@@ -226,6 +244,11 @@ function dynamicMask(maskit, masks, tokens) {
  // Facade to maskit/dynamicMask when mask is String or Array
 
 /* harmony default export */ var masker = (function (value, mask, masked = true, tokens) {
+  // disable on empty mask
+  if (!mask) {
+    return value;
+  }
+
   return Array.isArray(mask) ? dynamicMask(maskit, mask, tokens)(value, mask, masked, tokens) : maskit(value, mask, masked, tokens);
 });
 // CONCATENATED MODULE: ./src/directive.js
@@ -239,7 +262,7 @@ function directive_event(name) {
 }
 
 /* harmony default export */ var directive = (function (el, binding) {
-  var config = binding.value;
+  var config = binding.value || {};
 
   if (Array.isArray(config) || typeof config === 'string') {
     config = {
@@ -277,7 +300,7 @@ function directive_event(name) {
     var position = el.selectionEnd; // save the character just inserted
 
     var digit = el.value[position - 1];
-    el.value = masker(el.value, config.mask, true, config.tokens); // if the digit was changed, increment position until find the digit again
+    el.value = masker(el.value, (config || {}).mask, true, config.tokens); // if the digit was changed, increment position until find the digit again
 
     while (position < el.value.length && el.value.charAt(position - 1) !== digit) {
       position++;
@@ -293,7 +316,7 @@ function directive_event(name) {
     el.dispatchEvent(directive_event('input'));
   };
 
-  var newDisplay = masker(el.value, config.mask, true, config.tokens);
+  var newDisplay = masker(el.value, (config || {}).mask, true, config.tokens);
 
   if (newDisplay !== el.value) {
     el.value = newDisplay;
@@ -530,10 +553,7 @@ function install(Vue) {
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(install);
 }
-// CONCATENATED MODULE: /home/neves/.config/yarn/global/node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "TheMask", function() { return src_component; });
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "mask", function() { return directive; });
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "tokens", function() { return src_tokens; });
+// CONCATENATED MODULE: ../.nvm/versions/node/v12.22.12/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (src);
@@ -542,5 +562,4 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 /***/ })
 
-/******/ })["default"];
-//# sourceMappingURL=VueTheMask.common.js.map
+/******/ });

@@ -9,7 +9,7 @@ function event (name) {
 }
 
 export default function (el, binding) {
-  var config = binding.value
+  var config = binding.value || {}
   if (Array.isArray(config) || typeof config === 'string') {
     config = {
       mask: config,
@@ -45,7 +45,7 @@ export default function (el, binding) {
     var position = el.selectionEnd
     // save the character just inserted
     var digit = el.value[position-1]
-    el.value = masker(el.value, config.mask, true, config.tokens)
+    el.value = masker(el.value, (config || {}).mask, true, config.tokens)
     // if the digit was changed, increment position until find the digit again
     while (position < el.value.length && el.value.charAt(position-1) !== digit) {
       position++
@@ -59,7 +59,7 @@ export default function (el, binding) {
     el.dispatchEvent(event('input'))
   }
 
-  var newDisplay = masker(el.value, config.mask, true, config.tokens)
+  var newDisplay = masker(el.value, (config || {}).mask, true, config.tokens)
   if (newDisplay !== el.value) {
     el.value = newDisplay
     el.dispatchEvent(event('input'))
